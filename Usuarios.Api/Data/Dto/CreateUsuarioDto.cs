@@ -6,7 +6,7 @@ namespace Usuarios.Api.Data.Dto
     public class CreateUsuarioDto
     {
         [Required]
-        public string UserName { get; set; }
+        public string Username { get; set; }
         [Required]
         public DateTime DataNascimento { get; set; }
         [Required]
