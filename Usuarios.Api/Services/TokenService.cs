@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,6 +10,13 @@ namespace Usuarios.Api.Services;
 
 public class TokenService
 {
+    private IConfiguration _configuration;
+
+    public TokenService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
     public string GenerateToken(Usuario usuario)
     {
         Claim[] claims = new Claim[]
@@ -18,7 +26,7 @@ public class TokenService
             new Claim(ClaimTypes.DateOfBirth, usuario.DataNascimento.ToString())
         };
 
-        var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("FHSIHFAPIUHSDIUHC98H2389H98FHANC"));
+        var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SymmetricSecurityKey"]));
 
         var signInCredentials = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256);
         
